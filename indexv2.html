@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Туту Туры — лето зовёт, а кешбэк догоняет</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0D0B68;
+    --brand:#7D71FF;
+    --brand-dark:#5a4fe0;
+    --soft:#EDEFFF;
+    --sun:#FFB020;
+    --sun-soft:#FFF1D6;
+    --cash:#16A34A;
+    --cash-soft:#DCFCE7;
+    --sky:#22B8E6;
+    --text:#1a1a2e;
+    --muted:#6b7280;
+    --radius:22px;
+    --shadow:0 14px 44px rgba(13,11,104,.13);
+    --shadow-sm:0 6px 20px rgba(13,11,104,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:80px}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{text-decoration:none;color:inherit}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 18px}
+  .section{padding:54px 0}
+  h2.title{font-size:28px;font-weight:900;color:var(--ink);line-height:1.15;letter-spacing:-.02em}
+  .subtitle{color:var(--muted);font-size:16px;margin-top:8px}
+  .sec-head{margin-bottom:26px}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--soft)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .nav .logo-badge{background:var(--ink);border-radius:12px;padding:7px 12px;display:flex;align-items:center}
+  .nav .logo-badge img{height:22px;width:auto}
+  .nav-cta{background:var(--sun);color:var(--ink);padding:10px 18px;border-radius:30px;font-weight:800;font-size:14px;transition:.2s}
+  .nav-cta:hover{filter:brightness(1.05);transform:translateY(-1px)}
+
+  /* HERO */
+  .hero{position:relative;color:#fff;border-radius:0 0 32px 32px;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?auto=format&fit=crop&w=2000&q=80') center/cover;z-index:0}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,104,.55),rgba(13,11,104,.25) 45%,rgba(13,11,104,.65))}
+  .hero-inner{position:relative;z-index:1;padding:54px 0 40px;text-align:center}
+  .sun-banner{display:inline-flex;align-items:center;gap:10px;background:var(--sun);color:var(--ink);font-weight:900;font-size:16px;padding:10px 20px;border-radius:30px;box-shadow:0 8px 24px rgba(255,176,32,.45);margin-bottom:22px}
+  .hero h1{font-size:40px;font-weight:900;line-height:1.02;letter-spacing:-.03em;text-shadow:0 2px 20px rgba(0,0,0,.25)}
+  .hero h1 .accent{color:var(--sun)}
+  .hero .lead{font-size:18px;margin-top:14px;color:#eceaff;max-width:560px;margin-left:auto;margin-right:auto}
+  .promo-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px}
+  .promo{background:rgba(255,255,255,.16);border:1px dashed rgba(255,255,255,.5);backdrop-filter:blur(4px);padding:11px 16px;border-radius:14px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .promo b{color:var(--sun)}
+
+  /* SEARCH BAR (compact, на фото) */
+  .searchbar{position:relative;z-index:2;background:#fff;border-radius:20px;box-shadow:var(--shadow);max-width:980px;margin:28px auto 0;padding:10px;display:grid;grid-template-columns:1fr;gap:8px}
+  .sb-field{position:relative;padding:8px 12px;border-radius:14px;background:#fafaff}
+  .sb-field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+  .sb-field select,.sb-field input{width:100%;border:none;background:none;font-family:inherit;font-size:15px;font-weight:700;color:var(--ink);appearance:none;outline:none;margin-top:2px}
+  .sb-cta{background:var(--brand);color:#fff;font-weight:800;font-size:16px;border-radius:14px;padding:16px;transition:.2s}
+  .sb-cta:hover{background:var(--brand-dark)}
+
+  /* LIFESTYLE GRID */
+  .life-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .life{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3}
+  .life img{width:100%;height:100%;object-fit:cover;transition:.4s}
+  .life:hover img{transform:scale(1.06)}
+  .life span{position:absolute;left:14px;bottom:14px;color:#fff;font-weight:800;font-size:17px;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+  .life::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.5))}
+
+  /* DESTINATION TILES */
+  .dest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .dest{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/4;box-shadow:var(--shadow-sm)}
+  .dest img{width:100%;height:100%;object-fit:cover;transition:.4s}
+  .dest:hover img{transform:scale(1.07)}
+  .dest::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(13,11,104,.8))}
+  .dest .meta{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:16px;color:#fff}
+  .dest .meta b{font-size:18px;font-weight:900;display:block}
+  .dest .meta small{font-size:13px;opacity:.9}
+  .dest .price-pill{position:absolute;top:12px;left:12px;background:#fff;color:var(--ink);font-weight:800;font-size:12px;padding:6px 11px;border-radius:20px;z-index:2}
+
+  /* BENEFITS — полный чемодан выгоды */
+  .ben{background:linear-gradient(135deg,var(--soft),#fff)}
+  .ben-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:24px}
+  .ben-card{background:#fff;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);display:flex;gap:16px;align-items:flex-start}
+  .ben-card .ic{flex-shrink:0;width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--sun-soft)}
+  .ben-card:nth-child(2) .ic{background:var(--cash-soft)}
+  .ben-card:nth-child(3) .ic{background:var(--soft)}
+  .ben-card:nth-child(4) .ic{background:#E0F5FB}
+  .ben-card h3{font-size:17px;font-weight:800;color:var(--ink)}
+  .ben-card p{font-size:14px;color:var(--muted);margin-top:5px}
+
+  /* TOURS */
+  .tours-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:8px}
+  .tour-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid #f0f0fa;transition:.2s;display:flex;flex-direction:column}
+  .tour-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .tour-photo{position:relative;aspect-ratio:16/10;overflow:hidden}
+  .carousel{display:flex;height:100%;transition:transform .35s ease}
+  .carousel .slide{min-width:100%;height:100%}
+  .carousel .slide img{width:100%;height:100%;object-fit:cover}
+  .car-btn{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2);opacity:0;transition:.2s;z-index:2}
+  .tour-photo:hover .car-btn{opacity:1}
+  .car-btn.prev{left:10px}.car-btn.next{right:10px}
+  .car-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2}
+  .car-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);transition:.2s}
+  .car-dots span.active{background:#fff;width:18px;border-radius:4px}
+  .cash-badge{position:absolute;top:12px;right:12px;background:var(--sun);color:var(--ink);font-weight:900;font-size:13px;padding:7px 12px;border-radius:30px;box-shadow:0 4px 12px rgba(255,176,32,.5)}
+  .geo-badge{position:absolute;top:12px;left:12px;background:rgba(13,11,104,.85);color:#fff;font-weight:600;font-size:12px;padding:6px 11px;border-radius:20px}
+  .tour-body{padding:16px;display:flex;flex-direction:column;flex:1}
+  .tour-hotel{font-weight:800;color:var(--ink);font-size:16px;line-height:1.25}
+  .stars{color:#f59e0b;font-size:13px}
+  .tour-rating{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13px}
+  .rate-score{background:var(--cash-soft);color:var(--cash);font-weight:800;padding:3px 8px;border-radius:8px}
+  .tour-rating .reviews{color:var(--muted)}
+  .tour-meta{margin-top:12px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px;border-top:1px solid #f0f0fa;padding-top:12px}
+  .tour-meta b{color:var(--text);font-weight:600}
+  .tour-foot{margin-top:auto;padding-top:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+  .price-label{font-size:11px;color:var(--muted)}
+  .price{font-size:21px;font-weight:900;color:var(--ink);line-height:1.1}
+  .price small{font-size:11px;font-weight:500;color:var(--muted);display:block;margin-top:2px}
+  .btn-more{background:var(--soft);color:var(--brand);font-weight:700;font-size:14px;padding:11px 16px;border-radius:12px;white-space:nowrap;transition:.2s}
+  .btn-more:hover{background:var(--brand);color:#fff}
+
+  /* APP PROMO */
+  .app{background:var(--ink);color:#fff;border-radius:28px;padding:36px 24px;display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+  .app h2{font-size:26px;font-weight:900;letter-spacing:-.02em}
+  .app p{color:#bdbaf0;margin-top:10px;font-size:15px}
+  .app-cards{display:flex;gap:14px;align-items:center;margin-top:18px}
+  .qr{width:108px;height:108px;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .qr svg{width:88px;height:88px}
+  .store-row{display:flex;flex-direction:column;gap:8px}
+  .store{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:10px 16px;font-weight:700;font-size:14px}
+  .app-visual{display:none}
+
+  /* FAQ */
+  .faq-list{margin-top:22px;display:flex;flex-direction:column;gap:12px}
+  .faq-item{border:1.5px solid var(--soft);border-radius:16px;overflow:hidden;background:#fff}
+  .faq-q{width:100%;text-align:left;background:none;padding:18px 20px;font-weight:700;font-size:16px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq-q .ic{color:var(--brand);font-size:22px;transition:.2s;flex-shrink:0}
+  .faq-item.open .faq-q .ic{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--muted);font-size:15px}
+  .faq-a div{padding:0 20px 18px}
+  .faq-item.open .faq-a{max-height:340px}
+
+  /* FINAL */
+  .final{background:linear-gradient(120deg,var(--brand),var(--sky));color:#fff;text-align:center;border-radius:28px;padding:48px 24px;margin:36px 0}
+  .final h2{font-size:28px;font-weight:900}
+  .final p{color:#eef9ff;margin-top:10px;max-width:520px;margin-left:auto;margin-right:auto}
+  .final .sb-cta{max-width:340px;margin:22px auto 0;background:var(--sun);color:var(--ink)}
+  .final .sb-cta:hover{filter:brightness(1.05)}
+
+  footer{padding:30px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--soft)}
+
+  /* RESPONSIVE */
+  @media(min-width:768px){
+    .section{padding:72px 0}
+    .hero h1{font-size:60px}
+    h2.title{font-size:36px}
+    .searchbar{grid-template-columns:1.4fr 1.4fr 1.4fr 1.2fr auto}
+    .life-grid{grid-template-columns:repeat(4,1fr)}
+    .dest-grid{grid-template-columns:repeat(4,1fr)}
+    .ben-grid{grid-template-columns:repeat(2,1fr)}
+    .tours-grid{grid-template-columns:1fr 1fr}
+    .app{grid-template-columns:1.2fr .8fr;padding:48px}
+    .app-visual{display:block}
+  }
+  @media(min-width:1280px){
+    .hero-inner{padding:72px 0 48px}
+    .ben-grid{grid-template-columns:repeat(4,1fr)}
+    .tours-grid{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo-badge"><img src="logo.svg" alt="Туту Туры"></a>
+    <a href="#search" class="nav-cta">Найти тур →</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <div class="sun-banner">☀️ Кешбэк до 7% по карте «Мир»</div>
+    <h1>Лето зовёт,<br>а кешбэк <span class="accent">догоняет</span></h1>
+    <p class="lead">Пакетные туры на любой бюджет. Возвращаем до 7% живыми рублями на карту «Мир» после оплаты.</p>
+    <div class="promo-row">
+      <span class="promo">🏖 Туры · <b>до 7%</b></span>
+      <span class="promo">✈️ Авиабилеты · <b>в комплекте</b></span>
+      <span class="promo">🏨 Отели · <b>включены</b></span>
+    </div>
+
+    <div class="searchbar" id="search">
+      <div class="sb-field">
+        <label>Откуда</label>
+        <select><option>Москва</option><option>Санкт-Петербург</option><option>Екатеринбург</option><option>Новосибирск</option><option>Казань</option><option>Краснодар</option></select>
+      </div>
+      <div class="sb-field">
+        <label>Куда</label>
+        <select><option>Турция</option><option>Египет</option><option>ОАЭ</option><option>Таиланд</option><option>Мальдивы</option><option>Шри-Ланка</option><option>Любая страна</option></select>
+      </div>
+      <div class="sb-field">
+        <label>Когда</label>
+        <input type="text" value="17 — 24 июня" readonly>
+      </div>
+      <div class="sb-field">
+        <label>Туристы</label>
+        <select><option>2 взрослых</option><option>1 взрослый</option><option>2 взрослых, 1 ребёнок</option></select>
+      </div>
+      <button class="sb-cta" onclick="fakeSearch()">Найти тур</button>
+    </div>
+  </div>
+</section>
+
+<!-- LIFESTYLE GRID -->
+<section class="section">
+  <div class="wrap">
+    <div class="sec-head center" style="text-align:center">
+      <h2 class="title">Отпуск, который хочется прожить</h2>
+      <p class="subtitle">А кешбэк вернётся на карту — и хватит ещё на маленькие радости</p>
+    </div>
+    <div class="life-grid">
+      <div class="life"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80" alt=""><span>Море</span></div>
+      <div class="life"><img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80" alt=""><span>Яхты</span></div>
+      <div class="life"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=700&q=80" alt=""><span>Гастрономия</span></div>
+      <div class="life"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=700&q=80" alt=""><span>Спа и отели</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="title">Куда улететь этим летом</h2>
+      <p class="subtitle">Популярные направления с кешбэком до 7%</p>
+    </div>
+    <div class="dest-grid" id="dest"></div>
+  </div>
+</section>
+
+<!-- TOURS -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="title">Хиты сезона — туры с кешбэком</h2>
+      <p class="subtitle">Самый частый выбор пар: всё включено, кешбэк уже считается</p>
+    </div>
+    <div class="tours-grid" data-tours="b150"></div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="section ben">
+  <div class="wrap">
+    <div class="sec-head center" style="text-align:center">
+      <h2 class="title">Полный чемодан выгоды</h2>
+      <p class="subtitle">Не только кешбэк — забота на каждом шаге путешествия</p>
+    </div>
+    <div class="ben-grid">
+      <div class="ben-card"><div class="ic">💰</div><div><h3>Кешбэк до 7% на карту «Мир»</h3><p>7% за туры Travelata, 5% — за других туроператоров. До 7 000 ₽ за период акции.</p></div></div>
+      <div class="ben-card"><div class="ic">↩️</div><div><h3>Возврат за билеты</h3><p>Гибкие тарифы и помощь с возвратом, если планы поменяются.</p></div></div>
+      <div class="ben-card"><div class="ic">🛟</div><div><h3>Поддержка 24/7</h3><p>На связи до, во время и после поездки — на русском языке.</p></div></div>
+      <div class="ben-card"><div class="ic">✅</div><div><h3>Гарантия брони отеля</h3><p>Подтверждаем размещение — заселение без сюрпризов.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section class="wrap section">
+  <div class="app">
+    <div>
+      <h2>Туту в кармане — кешбэк всегда под рукой</h2>
+      <p>Оплачивайте туры картой «Мир» в приложении, отслеживайте начисление кешбэка и получайте лучшие цены.</p>
+      <div class="app-cards">
+        <div class="qr">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+            <rect width="100" height="100" fill="#fff"/>
+            <g fill="#0D0B68">
+              <rect x="6" y="6" width="22" height="22"/><rect x="12" y="12" width="10" height="10" fill="#fff"/>
+              <rect x="72" y="6" width="22" height="22"/><rect x="78" y="12" width="10" height="10" fill="#fff"/>
+              <rect x="6" y="72" width="22" height="22"/><rect x="12" y="78" width="10" height="10" fill="#fff"/>
+              <rect x="36" y="6" width="6" height="6"/><rect x="48" y="6" width="6" height="6"/><rect x="60" y="12" width="6" height="6"/>
+              <rect x="36" y="18" width="6" height="6"/><rect x="54" y="24" width="6" height="6"/><rect x="42" y="30" width="6" height="6"/>
+              <rect x="6" y="36" width="6" height="6"/><rect x="18" y="42" width="6" height="6"/><rect x="30" y="42" width="6" height="6"/>
+              <rect x="48" y="42" width="6" height="6"/><rect x="66" y="36" width="6" height="6"/><rect x="84" y="42" width="6" height="6"/>
+              <rect x="42" y="54" width="6" height="6"/><rect x="60" y="54" width="6" height="6"/><rect x="78" y="54" width="6" height="6"/>
+              <rect x="36" y="66" width="6" height="6"/><rect x="54" y="66" width="6" height="6"/><rect x="72" y="66" width="6" height="6"/>
+              <rect x="48" y="78" width="6" height="6"/><rect x="66" y="78" width="6" height="6"/><rect x="84" y="78" width="6" height="6"/>
+              <rect x="42" y="90" width="6" height="6"/><rect x="60" y="90" width="6" height="6"/><rect x="78" y="90" width="6" height="6"/>
+            </g>
+          </svg>
+        </div>
+        <div class="store-row">
+          <span class="store"> App Store</span>
+          <span class="store">▶ Google Play</span>
+          <span class="store">RuStore</span>
+        </div>
+      </div>
+    </div>
+    <div class="app-visual">
+      <img src="https://images.unsplash.com/photo-1512100356356-de1b84283e18?auto=format&fit=crop&w=700&q=80" alt="" style="border-radius:20px;aspect-ratio:4/3;object-fit:cover;width:100%">
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section ben">
+  <div class="wrap" style="max-width:840px">
+    <div class="sec-head center" style="text-align:center">
+      <h2 class="title">Частые вопросы о кешбэке</h2>
+    </div>
+    <div class="faq-list" id="faq"></div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="wrap">
+  <div class="final">
+    <h2>Лето не будет ждать ☀️</h2>
+    <p>Выберите тур сейчас — кешбэк до 7 000 ₽ вернётся на карту «Мир» после оплаты.</p>
+    <button class="sb-cta" onclick="document.getElementById('search').scrollIntoView()">Найти тур с кешбэком</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Туту Туры · Прототип v2 · Кешбэк до 7% по карте «Мир». Срок акции 2 апреля — 30 июня 2026</div>
+</footer>
+
+<script>
+/* ====== МОКОВЫЕ ДАННЫЕ ====== */
+const TOURS = [
+  {id:1, country:'Турция', resort:'Кемер', hotel:'Sea Breeze Resort', stars:4, rating:8.7, reviews:124, nights:7, board:'AI', dates:'17 – 24 июня', price:64900, cashback:4543, budget:'b100'},
+  {id:7, country:'Турция', resort:'Белек', hotel:'Royal Palm Spa', stars:5, rating:9.3, reviews:512, nights:7, board:'AI', dates:'17 – 24 июня', price:124000, cashback:7000, budget:'b150'},
+  {id:8, country:'ОАЭ', resort:'Дубай', hotel:'Marina Pearl Hotel', stars:4, rating:8.8, reviews:289, nights:6, board:'HB', dates:'19 – 25 июня', price:138000, cashback:7000, budget:'b150'},
+  {id:9, country:'Таиланд', resort:'Пхукет', hotel:'Andaman Sunset Resort', stars:4, rating:9.0, reviews:203, nights:9, board:'HB', dates:'14 – 23 июня', price:142500, cashback:7000, budget:'b150'},
+  {id:10, country:'Турция', resort:'Анталья', hotel:'Crystal Bay Premium', stars:5, rating:9.2, reviews:430, nights:7, board:'AI', dates:'18 – 25 июня', price:115000, cashback:7000, budget:'b150'},
+  {id:11, country:'Доминикана', resort:'Пунта-Кана', hotel:'Coco Beach Club', stars:4, rating:8.9, reviews:151, nights:8, board:'AI', dates:'16 – 24 июня', price:149000, cashback:7000, budget:'b150'},
+  {id:12, country:'Египет', resort:'Хургада', hotel:'Steigen Grand Resort', stars:5, rating:9.1, reviews:388, nights:7, board:'AI', dates:'20 – 27 июня', price:108000, cashback:7000, budget:'b150'},
+];
+
+const BOARD_LABEL = {AI:'Всё включено (AI)', HB:'Завтрак + ужин (HB)'};
+const TOUR_IMAGES = ['1.png', '2.png'];
+const carState = {};
+
+/* ====== НАПРАВЛЕНИЯ ====== */
+const DEST = [
+  {name:'Турция', note:'Анталья, Кемер, Белек', from:'от 64 900 ₽', img:'https://images.unsplash.com/photo-1593238739364-c4a7e0c5a1f3?auto=format&fit=crop&w=600&q=80'},
+  {name:'Египет', note:'Хургада, Шарм-эль-Шейх', from:'от 72 400 ₽', img:'https://images.unsplash.com/photo-1539768942893-daf53e448371?auto=format&fit=crop&w=600&q=80'},
+  {name:'ОАЭ', note:'Дубай, Абу-Даби', from:'от 138 000 ₽', img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80'},
+  {name:'Мальдивы', note:'Виллы на воде', from:'от 289 000 ₽', img:'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=600&q=80'},
+];
+function renderDest(){
+  document.getElementById('dest').innerHTML = DEST.map(d=>`
+    <a class="dest" href="#search">
+      <img src="${d.img}" alt="${d.name}">
+      <span class="price-pill">${d.from}</span>
+      <div class="meta"><b>${d.name}</b><small>${d.note}</small></div>
+    </a>`).join('');
+}
+
+/* ====== КАРТОЧКА ТУРА ====== */
+function renderTourCard(t){
+  const stars = '★'.repeat(t.stars);
+  const price = t.price.toLocaleString('ru-RU');
+  const cash = t.cashback.toLocaleString('ru-RU');
+  return `
+  <article class="tour-card">
+    <div class="tour-photo">
+      <div class="carousel" id="car-${t.id}">
+        ${TOUR_IMAGES.map(src=>`<div class="slide"><img src="${src}" alt="${t.hotel}" loading="lazy"></div>`).join('')}
+      </div>
+      <button class="car-btn prev" onclick="moveCar(${t.id},-1,event)">‹</button>
+      <button class="car-btn next" onclick="moveCar(${t.id},1,event)">›</button>
+      <div class="car-dots" id="dots-${t.id}">${TOUR_IMAGES.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}</div>
+      <span class="geo-badge">📍 ${t.country}, ${t.resort}</span>
+      <span class="cash-badge">Кешбэк ${cash} ₽</span>
+    </div>
+    <div class="tour-body">
+      <div class="tour-hotel">${t.hotel} <span class="stars">${stars}</span></div>
+      <div class="tour-rating"><span class="rate-score">${t.rating.toFixed(1)}/10</span><span class="reviews">${t.reviews} отзыва</span></div>
+      <div class="tour-meta"><span>📅 <b>${t.dates}</b> · ${t.nights} ночей</span><span>🍽 ${BOARD_LABEL[t.board]}</span></div>
+      <div class="tour-foot">
+        <div><div class="price-label">от</div><div class="price">${price} ₽<small>за двоих</small></div></div>
+        <button class="btn-more" onclick="fakeSearch()">Подробнее</button>
+      </div>
+    </div>
+  </article>`;
+}
+function renderTours(){
+  document.querySelectorAll('[data-tours]').forEach(box=>{
+    const key = box.dataset.tours;
+    box.innerHTML = TOURS.filter(t=>t.budget===key).map(renderTourCard).join('');
+  });
+}
+
+/* ====== КАРУСЕЛЬ ====== */
+function moveCar(id, dir, e){
+  if(e) e.stopPropagation();
+  const track = document.getElementById('car-'+id);
+  if(!track) return;
+  const n = TOUR_IMAGES.length;
+  const cur = ((carState[id]||0) + dir + n) % n;
+  carState[id] = cur;
+  track.style.transform = `translateX(-${cur*100}%)`;
+  const dots = document.getElementById('dots-'+id).children;
+  for(let i=0;i<dots.length;i++) dots[i].classList.toggle('active', i===cur);
+}
+
+/* ====== FAQ ====== */
+const FAQ = [
+  {q:'Кешбэк — это правда деньги, а не баллы?', a:'Да. Кешбэк возвращается живыми рублями на вашу карту «Мир» в рамках программы лояльности АО «НСПК». Это не баллы и не скидка.'},
+  {q:'Что нужно сделать, чтобы получить кешбэк?', a:'Зарегистрируйте карту «Мир» банка-участника программы лояльности на сайте или в приложении «Привет!» перед оплатой. Затем оплатите тур на сайте или в приложении Туту этой картой — выбирайте способ «Оплата картой» и указывайте её номер.'},
+  {q:'Сколько процентов вернётся?', a:'До 7%: 7% — при оплате туров туроператора Travelata, 5% — при оплате предложений других туроператоров. Перед оплатой проверьте, что в форме оплаты указано «Кешбэк 5% или 7% по карте «Мир».'},
+  {q:'Сколько максимум можно получить?', a:'Не более 7 000 ₽ за весь период акции на одного клиента. Кешбэк начисляется на всю сумму оплаты, включая доп. услуги — трансфер, страховку и другие опции.'},
+  {q:'На какие туры действует акция?', a:'На все направления и любые даты путешествия. Срок проведения акции — со 2 апреля по 30 июня 2026 года.'},
+  {q:'Когда придёт кешбэк?', a:'Не ранее 3 рабочих дней с момента покупки. В среднем кешбэк начисляется в течение 5–7 рабочих дней на вашу карту «Мир».'},
+];
+function renderFaq(){
+  document.getElementById('faq').innerHTML = FAQ.map((f,i)=>`
+    <div class="faq-item" data-i="${i}">
+      <button class="faq-q" onclick="toggleFaq(${i})">${f.q}<span class="ic">+</span></button>
+      <div class="faq-a"><div>${f.a}</div></div>
+    </div>`).join('');
+}
+function toggleFaq(i){
+  document.querySelectorAll('.faq-item').forEach(el=>{
+    if(+el.dataset.i===i) el.classList.toggle('open'); else el.classList.remove('open');
+  });
+}
+
+function fakeSearch(){alert('🎁 Прототип: здесь откроется выдача туров с кешбэком до 7 000 ₽ по карте «Мир».');}
+
+renderDest();
+renderTours();
+renderFaq();
+</script>
+</body>
+</html>
