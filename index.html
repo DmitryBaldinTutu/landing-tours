@@ -127,7 +127,8 @@
   .tour-meta b{color:var(--text);font-weight:600}
   .tour-foot{margin-top:auto;padding-top:14px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
   .price-label{font-size:11px;color:var(--muted)}
-  .price{font-size:21px;font-weight:900;color:var(--ink);line-height:1.1}
+  .price-old{font-size:14px;font-weight:600;color:var(--muted);text-decoration:line-through;text-decoration-color:#c4c4d6}
+  .price{font-size:21px;font-weight:900;color:var(--cash);line-height:1.1}
   .price small{font-size:11px;font-weight:500;color:var(--muted);display:block;margin-top:2px}
   .btn-more{background:var(--soft);color:var(--brand);font-weight:700;font-size:14px;padding:11px 16px;border-radius:12px;white-space:nowrap;transition:.2s}
   .btn-more:hover{background:var(--brand);color:#fff}
@@ -397,8 +398,10 @@ const carState = {};
 /* ====== ПЕРЕИСПОЛЬЗУЕМЫЙ КОМПОНЕНТ КАРТОЧКИ ====== */
 function renderTourCard(t){
   const stars = '★'.repeat(t.stars);
+  const cb = Math.min(Math.round(t.price * 0.07), 7000);   // 7%, но не более 7 000 ₽
   const price = t.price.toLocaleString('ru-RU');
-  const cash = t.cashback.toLocaleString('ru-RU');
+  const effective = (t.price - cb).toLocaleString('ru-RU');
+  const cash = cb.toLocaleString('ru-RU');
   return `
   <article class="tour-card">
     <div class="tour-photo">
@@ -426,7 +429,8 @@ function renderTourCard(t){
       <div class="tour-foot">
         <div>
           <div class="price-label">от</div>
-          <div class="price">${price} ₽<small>за двоих</small></div>
+          <div class="price-old">${price} ₽</div>
+          <div class="price">${effective} ₽<small>с кешбэком, за двоих</small></div>
         </div>
         <button class="btn-more" onclick="fakeSearch()">Подробнее</button>
       </div>
